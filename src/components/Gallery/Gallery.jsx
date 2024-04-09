@@ -16,6 +16,8 @@ const Gallery = () => {
 
  
 const [models, setModels] = useState([]);
+const [currentPosition, setCurrentPosition] = useState();
+
 
 const {isPresenting} = useXR();
 const {currentModel, setCurrentModel} = useModelContext();
@@ -49,6 +51,7 @@ const palceModel = (e) => {
   let position = e.intersection.object.position.clone();
   let id = Date.now();
   setModels([{position, id}])
+  setCurrentPosition(position);
 }
 
 
@@ -59,14 +62,15 @@ const palceModel = (e) => {
         <OrbitControls/>
         <ambientLight/>
         {isPresenting && 
-          // models.map(({position, id})=>{
-            // return (
-                <mesh ref={modelRef} position={position}>
+          models.map(({position, id})=>{
+            return (
+              <Fragment key={id}>
+                <mesh ref={modelRef} position={position} scale={[0.5,0.5,0.5]}>
                     <Table/>
                 </mesh>
-          // );
-
-          // })
+                </Fragment>
+          );
+          })
         }
           
         {isPresenting &&

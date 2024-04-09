@@ -9,7 +9,7 @@ const GalleryContainer = () => {
       <ARButton sessionInit={{
         requiredFeatures: ["hit-test"],
       }} />
-      <Canvas  camera = {{ position: [4, 0, -12], fov: 35}}>
+      <Canvas  camera = {{ position: [4, 0, -30]}}>
         <XR>
             <Gallery/>
         </XR>

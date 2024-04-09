@@ -6,6 +6,7 @@ Command: npx gltfjsx@6.2.16 public/models/Table.gltf
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { useConfigurator } from '../../context/Configurator'
+import * as THREE from "three";
 
 import { Box } from './Box';
 
@@ -13,10 +14,11 @@ export default function Model(props) {
   const { nodes, materials } = useGLTF('./models/Table.gltf')
 
   const {legs} = useConfigurator();
+  const boxContainer = new THREE.Group();
 
   return (
     <group {...props} dispose={null}>
-      <mesh geometry={nodes.Plate.geometry} material={materials.Plate} />
+      <mesh geometry={nodes.Plate.geometry} material={materials.Plate}/>
       {
         legs == 0 && (
           <>
@@ -44,7 +46,6 @@ export default function Model(props) {
         )
       }
       <Box/>
-
     </group>
   )
 }
