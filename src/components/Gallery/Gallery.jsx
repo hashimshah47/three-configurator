@@ -3,7 +3,9 @@ import { Interactive, useHitTest, useXR } from "@react-three/xr";
 import { Fragment, useEffect, useRef, useState } from "react";
 import {   useThree } from "@react-three/fiber";
 import { Experience } from "../Experience";
-import Table from "../Table";
+import Table from "../3dComponents/Table";
+import {BenchExperience} from "../BenchExperience"
+import { useModelContext } from "../../context/ModelContext";
 // import * as THREE from 'three';
 
 const Gallery = () => {
@@ -16,7 +18,7 @@ const Gallery = () => {
 const [models, setModels] = useState([]);
 
 const {isPresenting} = useXR();
-// const [currentModel, setCurrentModel] = useState(<Table/>);
+const {currentModel, setCurrentModel} = useModelContext();
 
 // const [selected, setSelected] = useState();
 // const [scale, setScale] = useState([1,1,1]);
@@ -57,14 +59,15 @@ const palceModel = (e) => {
         <OrbitControls/>
         <ambientLight/>
         {isPresenting && 
-          models.map(({position, id})=>{
-            return (
+          // models.map(({position, id})=>{
+            // return (
                 <mesh ref={modelRef} position={position}>
                     <Table/>
                 </mesh>
-          );
+          // );
 
-          })}
+          // })
+        }
           
         {isPresenting &&
         (
@@ -77,14 +80,9 @@ const palceModel = (e) => {
         </Interactive>
         )        
       }
+        {!isPresenting && currentModel === "table" &&  <Experience/> }
 
-        {/* {!isPresenting && currentModel === "druid" && <Druid />} */}
-
-        {!isPresenting &&  <Experience/> }
-
-        {/* {!isPresenting && currentModel === "bench" && <Bench />} */}
-
-
+        {!isPresenting && currentModel === "bench" && <BenchExperience />}
     </>
   )
 }

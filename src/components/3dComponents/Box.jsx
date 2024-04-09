@@ -1,6 +1,6 @@
 import { OrbitControls, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
-import { useConfigurator } from "../context/Configurator";
+import { useConfigurator } from "../../context/Configurator";
 import { useState } from "react";
 
 export const Box = () => {
@@ -10,7 +10,7 @@ export const Box = () => {
   const tableWidth = tableBoundingBox.max.x;
 
   const { box } = useConfigurator();
-  const [currentColor, setCurrentColor] = useState("white");
+  const [currentColor, setCurrentColor] = useState("gray");
 //   console.log(box);
 
 const boxSelected = () => {

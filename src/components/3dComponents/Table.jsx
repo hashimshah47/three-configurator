@@ -5,7 +5,7 @@ Command: npx gltfjsx@6.2.16 public/models/Table.gltf
 
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
-import { useConfigurator } from '../context/Configurator'
+import { useConfigurator } from '../../context/Configurator'
 
 import { Box } from './Box';
 

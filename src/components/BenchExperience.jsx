@@ -1,7 +1,7 @@
 import { OrbitControls, Stage } from "@react-three/drei";
-import Table from "./3dComponents/Table"
+import Bench from "./3dComponents/Bench"
 
-export const Experience = () => {
+export const BenchExperience = () => {
   return (
 <>
       <Stage 
@@ -16,7 +16,7 @@ export const Experience = () => {
         adjustCamera={2}
       >
 
-      <Table/>
+      <Bench/>
 
       </Stage>
       <OrbitControls makeDefault minPolarAngle={0} maxPolarAngle={Math.PI / 2}

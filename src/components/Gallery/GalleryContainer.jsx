@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { ARButton, Controllers, Hands, XR } from "@react-three/xr";
+import { ARButton, XR } from "@react-three/xr";
 import Gallery from "./Gallery";
 
 const GalleryContainer = () => {
@@ -9,7 +9,7 @@ const GalleryContainer = () => {
       <ARButton sessionInit={{
         requiredFeatures: ["hit-test"],
       }} />
-      <Canvas >
+      <Canvas  camera = {{ position: [4, 0, -12], fov: 35}}>
         <XR>
             <Gallery/>
         </XR>
