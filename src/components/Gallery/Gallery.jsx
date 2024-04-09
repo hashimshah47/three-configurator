@@ -52,10 +52,8 @@ const palceModel = (e) => {
   let id = Date.now();
   setModels([{position, id}])
   setCurrentPosition(position);
+  reticleRef.current.visible = false;
 }
-
-
-// const [scale, setScale] = useState(1);
 
   return (
     <>
