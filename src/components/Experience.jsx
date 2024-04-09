@@ -7,12 +7,12 @@ export const Experience = () => {
       <Stage 
       intensity={1.5} 
       environment={null} 
-      shadows={{
-          type: "accumulative",
-          color: "#d9afd9",
-          colorBlend: 2,
-          opacity: 2,
-        }}
+      // shadows={{
+      //     type: "accumulative",
+      //     color: "#d9afd9",
+      //     colorBlend: 2,
+      //     opacity: 2,
+      //   }}
         adjustCamera={2}
       >
 
