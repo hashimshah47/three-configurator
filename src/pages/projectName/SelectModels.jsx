@@ -1,6 +1,6 @@
 import React from 'react'
 import { useModelContext } from '../../context/ModelContext';
-import Table from "../../assets/images/Table.png";
+import Table from "../../assets/images/Table.PNG";
 // import Bench from "../../assets/images/bench.png";
 
 
