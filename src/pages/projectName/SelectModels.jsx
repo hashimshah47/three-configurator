@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useModelContext } from '../../context/ModelContext';
 import Table from "../../assets/images/Table.png";
-import Bench from "../../assets/images/bench.png";
+// import Bench from "../../assets/images/bench.png";
 
 
 
@@ -12,10 +12,7 @@ const handleTable = () => {
     console.log(currentModel);
 }
 
-const handleBench = () => {
-    setCurrentModel('bench');
-    console.log(currentModel);
-}
+
 
   return (
     <div>
