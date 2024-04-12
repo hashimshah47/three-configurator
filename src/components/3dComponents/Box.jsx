@@ -21,7 +21,6 @@ const boxSelected = () => {
     <>
       {box && (
         <>
-          {" "}
           <mesh
           onClick={boxSelected}
             position={[parseInt(tableWidth / 2) + 0.5, tableHeight + 0.5, 0]}

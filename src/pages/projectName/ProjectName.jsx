@@ -1,6 +1,8 @@
 import React from 'react'
 import GalleryContainer from  '../../components/Gallery/GalleryContainer'
 import SelectModels from './SelectModels'
+import XrOverlayContainer from '../../components/domOverlay/OverlayContainer'
+
 
 const ProjectName = () => {
   return (
@@ -10,7 +12,8 @@ const ProjectName = () => {
             <SelectModels/>
           </div>
           <div className=' w-[75%] h-[100vh]'>
-            <GalleryContainer/>
+            {/* <GalleryContainer/> */}
+            <XrOverlayContainer/>
           </div>
         </div>
     </div>
