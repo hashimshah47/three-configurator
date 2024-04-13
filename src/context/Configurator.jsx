@@ -11,6 +11,9 @@ export const ConfiguratorProvider = ({children}) => {
 
     const [inAR, setInAr] = useState(false);
 
+    const [isModelSelect ,setIsModelSelect] = useState(true);
+    const [incDec, setIncDec] = useState(null);
+
 
     return (
         <ConfiguratorContext.Provider
@@ -20,7 +23,9 @@ export const ConfiguratorProvider = ({children}) => {
                 scale, setScale,
                 rotateModel, setRotateModel,
                 rotateDirection, setRotateDirection,
-                inAR, setInAr
+                inAR, setInAr,
+                isModelSelect ,setIsModelSelect,
+                incDec, setIncDec
             }}
         >
             {children}

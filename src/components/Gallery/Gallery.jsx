@@ -8,17 +8,28 @@ import {BenchExperience} from "../BenchExperience"
 import { useModelContext } from "../../context/ModelContext";
 import * as THREE from 'three';
 import { useConfigurator } from "../../context/Configurator";
-
+import { Raycaster } from "three";
 
 const Gallery = () => {
-
+  const modelRef = useRef();
+  
   const [val, setVal] = useState(50); // Initial value
   const prevRefVal = useRef(val);
-  const {scale, setScale, rotateModel, setRotateModel, inAr, setInAr, rotateDirection} = useConfigurator();
+  const {scale, setScale, rotateModel, setRotateModel, inAr, setInAr, rotateDirection, incDec} = useConfigurator();
 
   useEffect(() => {
     console.log("rotateModel",rotateModel)
   },[rotateModel])
+
+  useEffect(() => {
+    if(modelRef.current){
+   
+      // console.log(modelRef.current)
+    // const raycaster = new THREE.Raycaster();
+    // const intersections = raycaster.intersectObjects(modelRef.current, true);
+    // console.log("intersection", intersections);
+  }
+  }, [rotateDirection, rotateModel]);
 
 
 
@@ -34,7 +45,7 @@ const Gallery = () => {
   },[scale])
 
   const reticleRef = useRef();
-  const modelRef = useRef();
+
  
 const [models, setModels] = useState([]);
 const [currentPosition, setCurrentPosition] = useState();
@@ -63,10 +74,10 @@ useFrame(() => {
   if(rotateModel) {
     if(modelRef.current){
       if(rotateDirection === "left"){
-      modelRef.current.rotation.y += THREE.MathUtils.degToRad(10);
+      modelRef.current.rotation.y += THREE.MathUtils.degToRad(5);
       }
       else if(rotateDirection === "right"){
-        modelRef.current.rotation.y -= THREE.MathUtils.degToRad(10);
+        modelRef.current.rotation.y -= THREE.MathUtils.degToRad(5);
         }
   }
   }
@@ -84,17 +95,17 @@ useFrame(() => {
 //     prevRefVal.current = val; // Update ref with the new value
 //   }
 // }, [val]); 
-// useFrame(() => {
-//   if(mouseDown) {
-//     if(modelRef.current && initialY!== currentY){
-//       if(initialY < currentY)
-//       set_Scale([0.993*_scale[0], 0.993*_scale[1], 0.993*_scale[2]]);
-//     }
-//     else {
-//       set_Scale([1.01*_scale[0], 1.01*_scale[1], 1.01*_scale[2]]);
-//     }
-//   }
-// },[])
+useFrame(() => {
+  if(rotateModel) {
+    if(modelRef.current && incDec === "decrease"){
+      // if(initialY < currentY)
+      set_Scale([0.99*_scale[0], 0.99*_scale[1], 0.99*_scale[2]]);
+    }
+    else if(modelRef.current && incDec === "increase"){
+      set_Scale([1.01*_scale[0], 1.01*_scale[1], 1.01*_scale[2]]);
+    }
+  }
+},[])
 
 useThree(({camera}) => {
   if(!isPresenting){
@@ -150,23 +161,37 @@ const releaseMouse = () => {
   setCurrentStored(false);
   setCurrent(0)
 }
+// const {isModelSelect ,setIsModelSelect} = useConfigurator(true);
+// const modelSelected = () =>{
+//   setIsModelSelect(true);
+//   console.log("selected")
+// }
+// const ModelSelectedEnd = () =>{
+//   setIsModelSelect(false);
+//   console.log("Select end")
+// }   
+
+// const ModelSelectMissed = () => {
+//   setIsModelSelect(false)
+//   console.log("Miss")
+// }
 
   return (
     <>
         {/* <OrbitControls/> */}
         <ambientLight/>
-        {isPresenting && 
-          // models.map(({position, id})=>{
-            // return (
-              // <Interactive  onMove={showStart} onSelectEnd={showEnd} onSelectMissed={showEnd}>
-              // {/* <Fragment key={id} > */}
+        {isPresenting  &&
+          models.map(({position, id})=>{
+            return (
+              <Interactive >
+               {/* <Fragment key={id} > */}
                 <mesh ref={modelRef} position={currentPosition} scale={_scale}>
                     <Table/>
                 </mesh>
-                // {/* </Fragment> */}
-                // </Interactive>
-          // );
-          // })
+                 {/* </Fragment> */}
+               </Interactive>
+          );
+          })
         }
 
         {isPresenting &&
