@@ -14,7 +14,12 @@ const Gallery = () => {
 
   const [val, setVal] = useState(50); // Initial value
   const prevRefVal = useRef(val);
-  const {scale, setScale} = useConfigurator();
+  const {scale, setScale, rotateModel, setRotateModel, inAr, setInAr, rotateDirection} = useConfigurator();
+
+  useEffect(() => {
+    console.log("rotateModel",rotateModel)
+  },[rotateModel])
+
 
 
   useEffect(() => {
@@ -40,6 +45,7 @@ const {isPresenting} = useXR();
 const {currentModel, setCurrentModel} = useModelContext();
 // console.log(scale)
 
+
 const [mouseDown, setMouseDown] = useState(false);
 const [initialX, setInitialX] = useState(false);
 const [finalX, setFinalX] = useState(false);
@@ -54,10 +60,15 @@ const [current, setCurrent] = useState(null);
 // Function to calculate rotation based on touch or mouse movement
 // Apply rotation to the model
 useFrame(() => {
-  if(mouseDown) {
-    if(modelRef.current && initialX!== current){
-      modelRef.current.rotation.y += THREE.MathUtils.degToRad(initialX/100);
-    }
+  if(rotateModel) {
+    if(modelRef.current){
+      if(rotateDirection === "left"){
+      modelRef.current.rotation.y += THREE.MathUtils.degToRad(10);
+      }
+      else if(rotateDirection === "right"){
+        modelRef.current.rotation.y -= THREE.MathUtils.degToRad(10);
+        }
+  }
   }
 },[])
 
@@ -109,6 +120,7 @@ const palceModel = (e) => {
   setModels([{position, id}])
   setCurrentPosition(position);
   reticleRef.current.visible = false;
+  setInAr(true);
 }
 
 const showStart = (e) => {
@@ -146,13 +158,13 @@ const releaseMouse = () => {
         {isPresenting && 
           // models.map(({position, id})=>{
             // return (
-              <Interactive  onMove={showStart} onSelectEnd={showEnd} onSelectMissed={showEnd}>
-              {/* <Fragment key={id} > */}
-                <mesh on ref={modelRef} position={currentPosition} scale={_scale}>
+              // <Interactive  onMove={showStart} onSelectEnd={showEnd} onSelectMissed={showEnd}>
+              // {/* <Fragment key={id} > */}
+                <mesh ref={modelRef} position={currentPosition} scale={_scale}>
                     <Table/>
                 </mesh>
-                {/* </Fragment> */}
-                </Interactive>
+                // {/* </Fragment> */}
+                // </Interactive>
           // );
           // })
         }
