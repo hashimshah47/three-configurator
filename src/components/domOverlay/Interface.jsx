@@ -20,6 +20,7 @@ useEffect(() => {
 const showEnd = (e) => {
   setMouseDown(false)
   setRotateModel(!rotateModel);
+  setRotateDirection(null);
 }
 
 const showStart = (e) => {
