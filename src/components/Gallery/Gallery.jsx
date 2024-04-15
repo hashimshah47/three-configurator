@@ -15,7 +15,7 @@ const Gallery = () => {
   
   const [val, setVal] = useState(50); // Initial value
   const prevRefVal = useRef(val);
-  const {scale, setScale, rotateModel, setRotateModel, inAr, setInAr, rotateDirection, incDec} = useConfigurator();
+  const {scale, setScale, rotateModel, setRotateModel, inAr, setInAr, rotateDirection, incDec, missMouseDown, setMissMouseDown} = useConfigurator();
 
   useEffect(() => {
     console.log("rotateModel",rotateModel)
@@ -78,8 +78,8 @@ useFrame(() => {
       }
       else if(rotateDirection === "right"){
         modelRef.current.rotation.y -= THREE.MathUtils.degToRad(5);
-        }
-  }
+      }
+    }
   }
 },[])
 
@@ -120,7 +120,6 @@ useHitTest((hitMatrix, hit) => {
     reticleRef.current.quaternion,
     reticleRef.current.scale
   );
-
   reticleRef.current.rotation.set(-Math.PI/2,0,0)
 });
 
@@ -134,26 +133,26 @@ const palceModel = (e) => {
   setInAr(true);
 }
 
-const showStart = (e) => {
+// const showStart = (e) => {
 
-  if (!currentStored) {
-    setMouseDown(true);
-    const val = parseInt(e.intersection?.point.x * 100000/120);
-    setCurrent(val)
-    setInitialX(val);
-    setCurrentStored(true);
-  } else {
-    setMouseDown(true)
-    const val = parseInt(e.intersection?.point.x * 100000/120);
-    setInitialX(val-current);
-  }
-};
+//   if (!currentStored) {
+//     setMouseDown(true);
+//     const val = parseInt(e.intersection?.point.x * 100000/120);
+//     setCurrent(val)
+//     setInitialX(val);
+//     setCurrentStored(true);
+//   } else {
+//     setMouseDown(true)
+//     const val = parseInt(e.intersection?.point.x * 100000/120);
+//     setInitialX(val-current);
+//   }
+// };
 
-const showEnd = (e) =>{
-  setMouseDown(false)
-  setInitialX(0)
-  releaseMouse();
-}
+// const showEnd = (e) =>{
+//   setMouseDown(false)
+//   setInitialX(0)
+//   releaseMouse();
+// }
 
 const releaseMouse = () => {
   setInitialX(0)
@@ -161,20 +160,43 @@ const releaseMouse = () => {
   setCurrentStored(false);
   setCurrent(0)
 }
-// const {isModelSelect ,setIsModelSelect} = useConfigurator(true);
-// const modelSelected = () =>{
-//   setIsModelSelect(true);
-//   console.log("selected")
-// }
-// const ModelSelectedEnd = () =>{
-//   setIsModelSelect(false);
-//   console.log("Select end")
-// }   
+const {isModelSelect ,setIsModelSelect} = useConfigurator();
+const modelSelected = () =>{
+  // setRotateModel(false);
+  setIsModelSelect(false);
+  console.log("selected")
+}
+const ModelSelectedEnd = () =>{
+  setIsModelSelect(false);
+  // console.log("Select end")
+}   
 
-// const ModelSelectMissed = () => {
-//   setIsModelSelect(false)
-//   console.log("Miss")
-// }
+const ModelSelectMissed = () => {
+  setIsModelSelect(true);
+  setMissMouseDown(!missMouseDown);
+  // console.log("Miss")
+  setRotateModel(false);
+
+}
+const [useModel, setUseModel] = useState();
+// useFrame((state, delta) => {
+//   if(modelRef.current && useModel){
+//     // console.log(useModel)
+//   setRotateModel(false);
+
+//     modelRef.current.position.x = useModel.intersection.point.x
+//     modelRef.current.position.z = useModel.intersection.point.z
+//   }
+//   setRotateModel(true);
+// },[useModel])
+const MoveModel = (e) => {
+  setUseModel(e);
+  setRotateModel(false);
+  if(modelRef.current){
+  modelRef.current.position.x = e.intersection.point.x
+  modelRef.current.position.z = e.intersection.point.z
+}
+}
 
   return (
     <>
@@ -183,7 +205,7 @@ const releaseMouse = () => {
         {isPresenting  &&
           models.map(({position, id})=>{
             return (
-              <Interactive >
+              <Interactive onMove={MoveModel} onSelectMissed={ModelSelectMissed} onSelect={modelSelected} onSelectEnd={ModelSelectedEnd}>
                {/* <Fragment key={id} > */}
                 <mesh ref={modelRef} position={currentPosition} scale={_scale}>
                     <Table/>

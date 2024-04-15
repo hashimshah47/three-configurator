@@ -63,19 +63,33 @@ const showMove = (e) => {
   // console.log(e.changedTouches[0].clientX)
 }
 
-// useEffect(() => {
-//   console.log(isModelSelect)
-// }, [isModelSelect])
+useEffect(() => {
+  console.log(isModelSelect)
+}, [isModelSelect])
 
 // ${isModelSelect ? ' hidden' : ''}
   return (
-    <div onTouchStart={showStart} onTouchMove={showMove} onTouchEnd={showEnd} className={`absolute w-[100%] h-[100%] bottom-[5rem] ${inAR ? 'pointer-events-all' : 'pointer-events-none'} `} ref={ref}>
+    <>
+{ isModelSelect ? 
+
+  <div onTouchStart={showStart} onTouchMove={showMove} onTouchEnd={showEnd} className={`absolute  bottom-[5rem] ${inAR ? 'pointer-events-all' : 'pointer-events-none'}   ${isModelSelect ? 'w-0 h-0' : 'w-[100%] h-[100%]'}` } ref={ref}>
        <div className=" absolute bottom-[8vh] w[100%]">
          <div className=" justify-center flex items-center w-[90%] gap-[1rem]  pointer-events-auto m-0 p-1">
         </div>
       </div>
     </div>
-  );
+:
+<div></div>
+}
+
+    </>
+
+
+  )
+
+
+
+
 });
 
 export default Interface;

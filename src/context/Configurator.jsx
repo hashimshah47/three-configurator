@@ -9,6 +9,9 @@ export const ConfiguratorProvider = ({children}) => {
     const [rotateModel, setRotateModel] = useState(false);
     const [rotateDirection, setRotateDirection] = useState(false);
 
+    const [missMouseDown, setMissMouseDown] = useState(false);
+
+
     const [inAR, setInAr] = useState(false);
 
     const [isModelSelect ,setIsModelSelect] = useState(true);
@@ -25,7 +28,8 @@ export const ConfiguratorProvider = ({children}) => {
                 rotateDirection, setRotateDirection,
                 inAR, setInAr,
                 isModelSelect ,setIsModelSelect,
-                incDec, setIncDec
+                incDec, setIncDec,
+                missMouseDown, setMissMouseDown
             }}
         >
             {children}
