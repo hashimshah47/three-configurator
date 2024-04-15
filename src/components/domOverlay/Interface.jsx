@@ -40,21 +40,28 @@ const showStart = (e) => {
 const showMove = (e) => {
   if(isInitialXStored){
     if(InitialXStored - e.changedTouches[0].clientX > 50){
-      console.log(InitialXStored - e.changedTouches[0].clientX)
+      setInitialXStored(e.changedTouches[0].clientX)
+      // console.log(InitialXStored - e.changedTouches[0].clientX)
       setRotateDirection("right");
     }
     else if(InitialXStored - e.changedTouches[0].clientX < -50){
+      setInitialXStored(e.changedTouches[0].clientX)
       setRotateDirection("left");
     }
+    // else if(InitialXStored - e.changedTouches[0].clientX <49|| InitialXStored - e.changedTouches[0].clientX > -49){
+    //   setRotateDirection(null);
+    // }
     
   }
 
   if (isInitialYStored){
     if (InitialYStored - e.changedTouches[0].clientY > 50){
+      setInitialYStored(e.changedTouches[0].clientY)
       setIncDec("increase");
       // console.log("increase")
     }
     else     if (InitialYStored - e.changedTouches[0].clientY < -50){
+      setInitialYStored(e.changedTouches[0].clientY)
       setIncDec("decrease");
 
       // console.log("decrease")
