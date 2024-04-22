@@ -9,16 +9,22 @@ import { useConfigurator } from '../../context/Configurator'
 import * as THREE from "three";
 
 import { Box } from './Box';
+import { useFrame } from '@react-three/fiber';
 
 export default function Model(props) {
   const { nodes, materials } = useGLTF('./models/Table.gltf')
 
   const {legs} = useConfigurator();
+  const meshRef = useRef();
   const boxContainer = new THREE.Group();
-
+  
+// useFrame(() => {
+  
+//   // meshRef.current.position = nodes.Plate.geometry.position.clone()
+// })
   return (
     <group {...props} dispose={null}>
-      <mesh geometry={nodes.Plate.geometry} material={materials.Plate}/>
+      <mesh ref={meshRef} geometry={nodes.Plate.geometry} material={materials.Plate}/>
       {
         legs == 0 && (
           <>
@@ -45,7 +51,7 @@ export default function Model(props) {
           </>
         )
       }
-      <Box/>
+      {/* <Box/> */}
     </group>
   )
 }

@@ -1,41 +1,155 @@
 import { OrbitControls, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { useConfigurator } from "../../context/Configurator";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const Box = () => {
   const { nodes } = useGLTF("./models/Table.gltf");
   const tableBoundingBox = new THREE.Box3().setFromObject(nodes.Plate);
   const tableHeight = tableBoundingBox.max.y;
   const tableWidth = tableBoundingBox.max.x;
+  const tableStartIndex = tableBoundingBox.min.x;
 
-  const { box } = useConfigurator();
+
+  const { box, shape ,addBox } = useConfigurator();
   const [currentColor, setCurrentColor] = useState("gray");
-//   console.log(box);
+  const [isBoxSelected, setIsBoxSelected] = useState(false);
+  const [eventt, setEventt] = useState(null);
+  const [positionArr, setPositionArr] = useState([0.25]);
+  const [here, setHere] = useState(false);
+  const [positionSelected, setPositionSelected] = useState(null);
+  const [visible, setVisible] = useState(true);
 
-const boxSelected = () => {
-    setCurrentColor(0x2c9e93);
-}
+
+
+  const [meshes, setMeshes] = useState([]);
+  const addMesh = (position) => {
+    const newMesh = {
+      position: position,
+      geometry: shape
+    };
+    // console.log(newMesh)
+    setMeshes(prevMeshes => [...prevMeshes, newMesh]);
+  };
+
+
+  // const {leftClicked ,setLeftClicked, rightClicked ,setRightClicked} = useBoxContext();
+
+  //   console.log(box);
+
+  // useEffect(() => {
+  //   console.log(rightClicked)
+  // },[rightClicked])
+
+  const meshRef = useRef();
+
+  const boxSelected = (e) => {
+    setIsBoxSelected(!isBoxSelected);
+    setEventt(e);
+    if (currentColor !== "gray") {
+      setCurrentColor("gray");
+    } else {
+      setCurrentColor(0x2c9e93);
+    }
+  };
+
+  // useFrame((state, delta) => {
+  //    if(meshRef.current && isBoxSelected) {
+  //     meshRef.current.position.x = eventt.point.x
+  //    }
+  // })
+  // const [isFirstMove, setIsFirstMove] = useState(false);
+  // const [firstMove, setFirstMove] = useState();
+
+  // const CalculateMove = (e) => {
+  //   console.log('calculating')
+  //   if(!isFirstMove){
+  //     setFirstMove(e.clientX)
+  //     setIsFirstMove(true)
+  //   }
+  //   else{
+  //     if(firstMove > e.clientX){
+  //       console.log("moving")
+  //       meshRef.current.position.x -= 0.015
+  //       // setPos(pos-0.1);
+  //       setFirstMove(e.clientX)
+  //     }
+  //     else if(firstMove < e.clientX){
+  //       meshRef.current.position.x += 0.015
+  //       // setPos(pos+0.1)
+  //       setFirstMove(e.clientX)
+  //     }
+  //   }
+  // }
+  // const PointerMoving = (e) => {
+  //   if(isBoxSelected && meshRef.current){
+  //     CalculateMove(e);
+  //   }
+
+  // }
+
+  const setPositions = () => {
+    // let totalTableLength = 4.4;
+    let totalTableLength = tableWidth * 2;
+    let totalItemsOnTop = parseInt(totalTableLength / 1.25);
+    let arr = [];
+    arr.push(0.25 + tableStartIndex + 0.5);
+    for (let i = 1; i < totalItemsOnTop; i++) {
+      arr.push(arr[i - 1] + 1.5);
+    }
+    setPositionArr(arr);
+  };
+  useEffect(() => {
+    setPositions();
+  }, []);
+
+  const placeBox = (index) => {
+    setPositionSelected(index);
+    setVisible(false)
+    addMesh(index);
+    addBox(false);
+    console.log(meshes)
+  };
+useEffect(() => {
+  if(box){
+    setVisible(true)
+  }
+},[box])
 
   return (
     <>
+      {/* {!isBoxSelected ? <OrbitControls /> : null} */}
       {box && (
         <>
-          <mesh
-          onClick={boxSelected}
-            position={[parseInt(tableWidth / 2) + 0.5, tableHeight + 0.5, 0]}
-          >
-            <boxGeometry />
-            <meshStandardMaterial color={currentColor}/>
-          </mesh>
-          <OrbitControls
-            makeDefault
-            minPolarAngle={0}
-            maxPolarAngle={Math.PI / 2}
-          />
-          <ambientLight />
+          {positionArr.map((val, index) => {
+            return (
+              <mesh
+                visible={visible}
+                key={index}
+                ref={meshRef}
+                onClick={() => placeBox(index)}
+                position={[val, tableHeight, 0]}
+              >
+                <boxGeometry args={[1, 0.001, 1]} />
+                <meshStandardMaterial color={0x2c9e93} />
+              </mesh>
+            );
+          })}
         </>
       )}
+
+
+          {meshes.map((mesh, index) => {
+          return (
+            <mesh key={index} position={[positionArr[mesh.position], tableHeight + 0.5, 0]}>
+              {mesh.geometry === "box" && <boxGeometry args={[0.9,0.9,0.9]} />}
+              {mesh.geometry === "sphere" && (  <sphereGeometry args={[0.5]} /> )}
+              <meshStandardMaterial color={currentColor} />
+            </mesh>
+          )
+          })}
+
+
     </>
   );
 };

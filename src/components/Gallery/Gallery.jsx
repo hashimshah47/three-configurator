@@ -9,6 +9,7 @@ import { useModelContext } from "../../context/ModelContext";
 import * as THREE from 'three';
 import { useConfigurator } from "../../context/Configurator";
 import { Raycaster } from "three";
+import { Box } from "../3dComponents/Box";
 
 const Gallery = () => {
   const modelRef = useRef();
@@ -17,9 +18,9 @@ const Gallery = () => {
   const prevRefVal = useRef(val);
   const {scale, setScale, rotateModel, setRotateModel, inAr, setInAr, rotateDirection, incDec, missMouseDown, setMissMouseDown} = useConfigurator();
 
-  useEffect(() => {
-    console.log("rotateModel",rotateModel)
-  },[rotateModel])
+  // useEffect(() => {
+  //   console.log("rotateModel",rotateModel)
+  // },[rotateModel])
 
   useEffect(() => {
     if(modelRef.current){
@@ -84,17 +85,7 @@ useFrame(() => {
 },[])
 
 
-// useEffect(() => {
-//   if (val !== prevRefVal.current && direction === "increasing") {
-//     // Call your function here
-//       set_Scale([1.1*_scale[0], 1.1*_scale[1], 1.1*_scale[2]]);
-//       prevRefVal.current = val; // Update ref with the new value
-//   }
-//   else if(val !== prevRefVal.current && direction === "decreasing"){
-//     set_Scale([0.9*_scale[0], 0.9*_scale[1], 0.9*_scale[2]]);
-//     prevRefVal.current = val; // Update ref with the new value
-//   }
-// }, [val]); 
+
 useFrame(() => {
   if(rotateModel) {
     if(modelRef.current && incDec === "decrease"){
@@ -133,26 +124,6 @@ const palceModel = (e) => {
   setInAr(true);
 }
 
-// const showStart = (e) => {
-
-//   if (!currentStored) {
-//     setMouseDown(true);
-//     const val = parseInt(e.intersection?.point.x * 100000/120);
-//     setCurrent(val)
-//     setInitialX(val);
-//     setCurrentStored(true);
-//   } else {
-//     setMouseDown(true)
-//     const val = parseInt(e.intersection?.point.x * 100000/120);
-//     setInitialX(val-current);
-//   }
-// };
-
-// const showEnd = (e) =>{
-//   setMouseDown(false)
-//   setInitialX(0)
-//   releaseMouse();
-// }
 
 const releaseMouse = () => {
   setInitialX(0)
@@ -179,16 +150,7 @@ const ModelSelectMissed = () => {
 
 }
 const [useModel, setUseModel] = useState();
-// useFrame((state, delta) => {
-//   if(modelRef.current && useModel){
-//     // console.log(useModel)
-//   setRotateModel(false);
 
-//     modelRef.current.position.x = useModel.intersection.point.x
-//     modelRef.current.position.z = useModel.intersection.point.z
-//   }
-//   setRotateModel(true);
-// },[useModel])
 const MoveModel = (e) => {
   setUseModel(e);
   setRotateModel(false);
@@ -208,7 +170,9 @@ const MoveModel = (e) => {
               <Interactive onMove={MoveModel} onSelectMissed={ModelSelectMissed} onSelect={modelSelected} onSelectEnd={ModelSelectedEnd}>
                {/* <Fragment key={id} > */}
                 <mesh ref={modelRef} position={currentPosition} scale={_scale}>
-                    <Table/>
+                    <Experience/>
+                    {/* <Table/> */}
+                    {/* <Box/> */}
                 </mesh>
                  {/* </Fragment> */}
                </Interactive>

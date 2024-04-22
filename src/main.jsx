@@ -4,14 +4,18 @@ import App from './App'
 import './index.css'
 import { ConfiguratorProvider } from './context/Configurator';
 import {ModelProvider} from './context/ModelContext.jsx';
+import {BoxProvider} from './context/BoxContext.jsx';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ConfiguratorProvider>
+      <BoxProvider>
       <ModelProvider>
         <App />
+        
       </ModelProvider>
+      </BoxProvider>
     </ConfiguratorProvider>
   </React.StrictMode>,
 )

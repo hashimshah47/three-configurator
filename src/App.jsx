@@ -4,6 +4,7 @@ import {Interface} from "./components/Interface";
 import GalleryContainer from "./components/Gallery/GalleryContainer";
 import { ARButton, XR } from "@react-three/xr";
 import ProjectName from "./pages/projectName/ProjectName";
+import { Popup } from "./components/Popup";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         </XR>
       </Canvas> */}
       <Interface/>
+      {/* <Popup/> */}
     </>
   );
 }

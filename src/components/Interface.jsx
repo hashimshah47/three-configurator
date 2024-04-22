@@ -12,19 +12,32 @@ import {
 } from "@mui/material";
 import { useConfigurator } from "../context/Configurator";
 import { useEffect, useState } from "react";
+import boxImage from '../assets/images/box.jpg'
+import sphereImage from '../assets/images/sphere.jpg'
+
 export const Interface = () => {
   // const { tableWidth, setTableWidth, legs, setLegs, legsColor, setLegsColor } =
-    const { legs, setLegs, box, addBox} = useConfigurator();
+    const { legs, setLegs, box, addBox, shape, setShape} = useConfigurator();
     const [addRemove, setAddRemove] = useState("");
 
-    useEffect(() => {
-      if(!box){
-        setAddRemove("Add Box")
-      }
-      else{
-        setAddRemove("Remove Box")
-      }
-    },[box, addBox])
+
+    const isBox = () => {
+      addBox(true);
+      setShape("box");
+    } 
+    const isSphere = () => {
+      addBox(true);
+      setShape("sphere");
+    } 
+
+    // useEffect(() => {
+    //   if(!box){
+    //     setAddRemove("Add Box")
+    //   }
+    //   else{
+    //     setAddRemove("Remove Box")
+    //   }
+    // },[box, addBox])
   return (
     <Box
       sx={{
@@ -36,21 +49,6 @@ export const Interface = () => {
     >
       <Stack spacing={3}>
         <Typography variant="caption">Table Configurator</Typography>
-        {/* <Box className="glass" p={3}>
-          <FormControl>
-            <FormLabel>Table width</FormLabel>
-            <Slider
-              sx={{
-                width: "200px",
-              }}
-              min={50}
-              max={200}
-              // value={tableWidth}
-              // onChange={(e) => setTableWidth(e.target.value)}
-              valueLabelDisplay="auto"
-            />
-          </FormControl>
-        </Box> */}
         <Box className="glass" p={3}>
           <FormControl>
             <FormLabel>Legs Layout</FormLabel>
@@ -73,11 +71,19 @@ export const Interface = () => {
 
         <Box className="glass" p={3}>
           <FormControl>
-            <Button  onClick={()=>addBox(!box)} >
-              {addRemove}
+            <Button  onClick={isBox} >
+              <img src={boxImage}
+              style={{height: '50px'}}
+              />
+            </Button>
+            <Button  onClick={isSphere} >
+            <img src={sphereImage}
+              style={{height: '50px'}}
+              />
             </Button>
           </FormControl>
         </Box>
+
         {/* <Box className="glass" p={3}>
           <FormControl>
             <FormLabel>Legs Color</FormLabel>

@@ -1,10 +1,11 @@
-import { OrbitControls, Stage } from "@react-three/drei";
+import {  OrbitControls, Stage } from "@react-three/drei";
 import Table from "./3dComponents/Table"
+import { Box } from "./3dComponents/Box";
 
 export const Experience = () => {
   return (
 <>
-      <Stage 
+      {/* <Stage 
       intensity={1.5} 
       environment={null} 
       // shadows={{
@@ -14,11 +15,12 @@ export const Experience = () => {
       //     opacity: 2,
       //   }}
         adjustCamera={2}
-      >
+      > */}
 
       <Table/>
+      <Box/>
 
-      </Stage>
+      {/* </Stage> */}
       <OrbitControls makeDefault minPolarAngle={0} maxPolarAngle={Math.PI / 2}
       />
       <ambientLight/>

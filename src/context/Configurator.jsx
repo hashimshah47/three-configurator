@@ -16,6 +16,8 @@ export const ConfiguratorProvider = ({children}) => {
 
     const [isModelSelect ,setIsModelSelect] = useState(true);
     const [incDec, setIncDec] = useState(null);
+    const [shape, setShape] = useState("");
+
 
 
     return (
@@ -29,7 +31,8 @@ export const ConfiguratorProvider = ({children}) => {
                 inAR, setInAr,
                 isModelSelect ,setIsModelSelect,
                 incDec, setIncDec,
-                missMouseDown, setMissMouseDown
+                missMouseDown, setMissMouseDown,
+                shape, setShape
             }}
         >
             {children}
