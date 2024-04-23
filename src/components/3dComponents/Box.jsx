@@ -1,7 +1,12 @@
-import { OrbitControls, useGLTF } from "@react-three/drei";
+import {  useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { useConfigurator } from "../../context/Configurator";
 import { useEffect, useRef, useState } from "react";
+import { useBoxContext } from "../../context/BoxContext";
+
+
+
+
 
 export const Box = () => {
   const { nodes } = useGLTF("./models/Table.gltf");
@@ -19,6 +24,8 @@ export const Box = () => {
   const [here, setHere] = useState(false);
   const [positionSelected, setPositionSelected] = useState(null);
   const [visible, setVisible] = useState(true);
+  const [itemIndex, setItemIndex] = useState(null);
+  const {isBoxSelect ,setIsBoxSelect, removeBox, setRemoveBox} = useBoxContext();
 
 
 
@@ -116,8 +123,29 @@ useEffect(() => {
   }
 },[box])
 
+
+const itemSelected = (index) => {
+  setItemIndex(index);
+  // setPopup(true);
+  setIsBoxSelect(true)
+  // console.log("Remove",removeBox);
+  // if(removeBox){
+  // const updatedMeshes = meshes.filter((_, i) => i !== index);
+  // setMeshes(updatedMeshes);
+  // setRemoveBox(!removeBox)
+  // }
+}
+useEffect(() => {
+  // if(removeBox){
+  const updatedMeshes = meshes.filter((_, i) => i !== itemIndex);
+  setMeshes(updatedMeshes);
+  setIsBoxSelect(false)
+  
+// }
+},[removeBox])
   return (
     <>
+    {/* {popup? <AlertDialogSlide/>:null} */}
       {/* {!isBoxSelected ? <OrbitControls /> : null} */}
       {box && (
         <>
@@ -141,15 +169,13 @@ useEffect(() => {
 
           {meshes.map((mesh, index) => {
           return (
-            <mesh key={index} position={[positionArr[mesh.position], tableHeight + 0.5, 0]}>
+            <mesh onClick={()=>itemSelected(index)} key={index} position={[positionArr[mesh.position], tableHeight + 0.5, 0]}>
               {mesh.geometry === "box" && <boxGeometry args={[0.9,0.9,0.9]} />}
               {mesh.geometry === "sphere" && (  <sphereGeometry args={[0.5]} /> )}
               <meshStandardMaterial color={currentColor} />
             </mesh>
           )
           })}
-
-
     </>
   );
 };

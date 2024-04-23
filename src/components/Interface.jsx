@@ -14,12 +14,14 @@ import { useConfigurator } from "../context/Configurator";
 import { useEffect, useState } from "react";
 import boxImage from '../assets/images/box.jpg'
 import sphereImage from '../assets/images/sphere.jpg'
+import { useBoxContext } from "../context/BoxContext";
 
 export const Interface = () => {
   // const { tableWidth, setTableWidth, legs, setLegs, legsColor, setLegsColor } =
     const { legs, setLegs, box, addBox, shape, setShape} = useConfigurator();
-    const [addRemove, setAddRemove] = useState("");
+    // const [addRemove, setAddRemove] = useState("");
 
+    const {isBoxSelect ,setIsBoxSelect, removeBox ,setRemoveBox} = useBoxContext();
 
     const isBox = () => {
       addBox(true);
@@ -29,6 +31,10 @@ export const Interface = () => {
       addBox(true);
       setShape("sphere");
     } 
+
+    const remove_Box = () =>{
+      setRemoveBox(!removeBox);
+    }
 
     // useEffect(() => {
     //   if(!box){
@@ -84,6 +90,20 @@ export const Interface = () => {
           </FormControl>
         </Box>
 
+
+{ isBoxSelect && (<>
+        <Box className="glass" p={3}>
+          <FormControl>
+            <Button onClick={remove_Box}>
+              Remove
+            </Button>
+            {/* <Button  >
+              Replace
+            </Button> */}
+          </FormControl>
+        </Box>
+        </>)
+        }
         {/* <Box className="glass" p={3}>
           <FormControl>
             <FormLabel>Legs Color</FormLabel>

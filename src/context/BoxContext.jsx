@@ -4,7 +4,9 @@ const BoxContext = createContext();
 
 export const BoxProvider = ({children}) => {
 
-    const [isBoxSelect ,setIsBoxSelect] = useState(true);
+    const [isBoxSelect ,setIsBoxSelect] = useState(false);
+    const [removeBox ,setRemoveBox] = useState(false);
+
     const [leftClicked ,setLeftClicked] = useState(false);
     const [rightClicked ,setRightClicked] = useState(false);
 
@@ -15,7 +17,8 @@ export const BoxProvider = ({children}) => {
             value={{
                 isBoxSelect ,setIsBoxSelect,
                 leftClicked ,setLeftClicked,
-                rightClicked ,setRightClicked
+                rightClicked ,setRightClicked,
+                removeBox ,setRemoveBox
             }}
         >
             {children}
