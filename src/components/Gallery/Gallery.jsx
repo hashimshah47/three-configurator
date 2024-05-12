@@ -4,12 +4,13 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import {   useFrame, useThree } from "@react-three/fiber";
 import { Experience } from "../Experience";
 import Table from "../3dComponents/Table";
-import {BenchExperience} from "../BenchExperience"
 import { useModelContext } from "../../context/ModelContext";
 import * as THREE from 'three';
 import { useConfigurator } from "../../context/Configurator";
 import { Raycaster } from "three";
 import { Box } from "../3dComponents/Box";
+import Lamp from '../3dComponents/Lamp'
+import Hotel from '../3dComponents/Hotels'
 
 const Gallery = () => {
   const modelRef = useRef();
@@ -170,8 +171,9 @@ const MoveModel = (e) => {
               <Interactive onMove={MoveModel} onSelectMissed={ModelSelectMissed} onSelect={modelSelected} onSelectEnd={ModelSelectedEnd}>
                {/* <Fragment key={id} > */}
                 <mesh ref={modelRef} position={currentPosition} scale={_scale}>
-                    <Experience/>
+                    {/* <Experience/> */}
                     {/* <Table/> */}
+                    {/* <Lamp/> */}
                     {/* <Box/> */}
                 </mesh>
                  {/* </Fragment> */}
@@ -191,9 +193,9 @@ const MoveModel = (e) => {
         </Interactive>
         )        
       }
-        {!isPresenting && currentModel === "table" &&  <Experience/> }
+        {!isPresenting && <Experience/> }
 
-        {!isPresenting && currentModel === "bench" && <BenchExperience />}
+        {/* {!isPresenting && currentModel === "bench" && <BenchExperience />} */}
     </>
   )
 }

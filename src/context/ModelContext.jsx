@@ -18,7 +18,7 @@ export const ModelProvider = (props) => {
   //     }
   //   }
   // })
-  const [currentModel, setCurrentModel] = useState('table');
+  const [currentModel, setCurrentModel] = useState('');
 
   return (
     <ModelContext.Provider

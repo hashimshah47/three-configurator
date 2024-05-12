@@ -5,6 +5,7 @@ import './index.css'
 import { ConfiguratorProvider } from './context/Configurator';
 import {ModelProvider} from './context/ModelContext.jsx';
 import {BoxProvider} from './context/BoxContext.jsx';
+import { BrowserRouter } from 'react-router-dom';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -12,8 +13,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <ConfiguratorProvider>
       <BoxProvider>
       <ModelProvider>
+        <BrowserRouter>
         <App />
-        
+        </BrowserRouter>
       </ModelProvider>
       </BoxProvider>
     </ConfiguratorProvider>
