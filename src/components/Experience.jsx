@@ -13,11 +13,11 @@ import { useEffect } from "react";
 
 export const Experience = () => {
 
-const {currentModel, setCurrentModel} = useModelContext();
+const {currentModel, setCurrentModel, currentInstrument, setCurrentInstrument} = useModelContext();
 
-useEffect(() => {
-  console.log("useeff",currentModel)
-},[currentModel, setCurrentModel])
+// useEffect(() => {
+//   console.log("useeff",currentModel)
+// },[currentModel, setCurrentModel])
 
   return (
 <>
@@ -37,9 +37,13 @@ useEffect(() => {
 
       {currentModel && currentModel === 'table' && <Table/>}
       {currentModel && currentModel === 'doubletable' && <DoubleTable/>}
-      {/* {currentModel && currentModel === 'hotel' && <Hotel/>} */}
-      {/* {currentModel && currentModel === 'table' && <Table/>} */}
-      {/* {currentModel && currentModel === 'table' && <Table/>} */}
+
+      {currentInstrument && currentInstrument === 'hotel' && <Hotel/>}
+      {currentInstrument && currentInstrument === 'lamp' && <Lamp/>}
+      {currentInstrument && currentInstrument === 'pc' && <PC/>}
+      {currentInstrument && currentInstrument === 'arm' && <Arm/>}
+      {currentInstrument && currentInstrument === 'printer' && <Printer/>}
+
 
 
 

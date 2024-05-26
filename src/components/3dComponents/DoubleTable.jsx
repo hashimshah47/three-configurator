@@ -6,7 +6,7 @@ import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
 export default function Model(props) {
-  const { nodes, materials } = useGLTF('./models/DoubleTable.glb')
+  const { nodes, materials } = useGLTF('./models/TableDouble.glb')
   return (
     <group {...props} dispose={null} scale={0.4}>
       {/* <group rotation={[-Math.PI / 2, 0, 0]} > */}
@@ -47,4 +47,4 @@ export default function Model(props) {
   )
 }
 
-useGLTF.preload('./models/DoubleTable.glb')
+useGLTF.preload('./models/TableDouble.glb')

@@ -111,7 +111,7 @@ import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
 export default function Model(props) {
-  const { nodes, materials } = useGLTF('./models/ARM.glb')
+  const { nodes, materials } = useGLTF('./models/Arm.glb')
   return (
     <group {...props} dispose={null}>
       <group position={[-0.005, 1.034, 0.024]} scale={0.189}>
@@ -135,4 +135,4 @@ export default function Model(props) {
   )
 }
 
-useGLTF.preload('./models/ARM.glb')
+useGLTF.preload('./models/Arm.glb')
