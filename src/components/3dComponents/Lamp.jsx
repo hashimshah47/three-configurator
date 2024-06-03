@@ -9,7 +9,7 @@ export default function Model(props) {
   const { nodes, materials } = useGLTF('./models/Lamp.glb')
   console.log(nodes)
   return (
-    <group {...props} dispose={null} position={[0, 0, -4]} >
+    <group {...props} dispose={null} position={[2, -4, 0]} scale={0.4}>
       {/* <group position={[132.697, 89.059, -49.74]} rotation={[-Math.PI / 2, 0, 0]} scale={18.882}> */}
         <mesh
           castShadow

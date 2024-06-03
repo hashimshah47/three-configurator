@@ -6,6 +6,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
 import { useModelContext } from '../../context/ModelContext';
+import { useXR } from '@react-three/xr';
 
 export default function Model(props) {
 
@@ -16,36 +17,40 @@ export default function Model(props) {
   const tableWidth = tableBoundingBox.max.x;
   const tableStartIndex = tableBoundingBox.min.x;
 
-  const {currentInstrument, setCurrentInstrument} = useModelContext()
+  const {currentInstrument, setCurrentInstrument, hotelSelected, setHotelSelected} = useModelContext()
   const [positionArr, setPositionArr] = useState([0.25]);
-  const [zArr, setZArr] = useState([-0.55,-0.55, -0.55, 0.03, 0.03, 0.03, 0.6, 0.6, 0.6]);
+  const [zArr, setZArr] = useState([-0.4, -0.4, 0.45, 0.45]);
   const [xArr, setXArr] = useState([
-    tableStartIndex + 1.55, tableStartIndex + 1.55+0.6, tableStartIndex + 1.55+0.6+0.6,
-    tableStartIndex + 1.55, tableStartIndex + 1.55+0.6, tableStartIndex + 1.55+0.6+0.6, 
-    tableStartIndex + 1.55, tableStartIndex + 1.55+0.6, tableStartIndex + 1.55+0.6+0.6]);
-    
+    tableStartIndex + 1.7, tableStartIndex + 1.4+0.6+0.6,
+    tableStartIndex + 1.7, tableStartIndex + 1.4+0.6+0.6]);
+
   const [visible, setVisible] = useState(false);
   const [positionSelected, setPositionSelected] = useState(null);
-  const [meshes, setMeshes] = useState([]);
-  
 
-  const {hotelSelected, setHotelSelected} = useModelContext();
-
-  
-  const addMesh = (position) => {
-    const newMesh = {
-      position: position,
-      // geometry: shape
-    };
-    setMeshes(prevMeshes => [...prevMeshes, newMesh]);
-
+  const m0 = {
+    position: 0,
   };
-  let totalItemsOnTop = 9;
+  const m1 = {
+    position: 1,
+  };
+  const m2 = {
+    position: 2,
+  };
+  const backupMeshes = [];
+  const [meshes, setMeshes] = useState([]);
+
+  // const addMesh = (position) => {
+  //   const newMesh = {
+  //     position: position,
+  //     // geometry: shape
+  //   };
+  //   setMeshes((prevMeshes) => [...prevMeshes, newMesh]);
+  //   // meshes.push(newMesh)
+  //   console.log(meshes)
+  // };
 
   const setPositions = () => {
-    // let totalTableLength = 4.4;
-    let totalTableLength = tableWidth * 2;
-    // parseInt(totalTableLength / 1.25);
+  let totalItemsOnTop = 9;
     let arr = [];
     arr.push(tableStartIndex + 1.59);
     for (let i = 0; i < totalItemsOnTop; i++) {
@@ -56,39 +61,42 @@ export default function Model(props) {
 
   useEffect(() => {
     setPositions();
-    console.log(positionArr)
   }, []);
 
-useEffect(()=>{
-  setVisible(!visible)
-  console.log(hotelSelected)
-},[hotelSelected, setHotelSelected])
+// useEffect(()=>{
+//   setVisible(!visible)
+//   // console.log(hotelSelected)
+// },[hotelSelected, setHotelSelected])
 
- const placeHotel = (index) => {
+ const placeHotel = async (index) => {
   // if(visible){
     // setVisible(false)
-    addMesh(index);
+    // addMesh(index);
+    const newMesh = {
+      position: index,
+    }
+    // backupMeshes.push(newMesh);
+    // console.log(backupMeshes)
+    setMeshes((prevMeshes) => [...prevMeshes, newMesh]);
     setHotelSelected(false);
   // }
 }
 
  const HotelModel = ({positions}) => {
   return(
-    <group {...props} dispose={null} position={[positions[0], positions[1], positions[2]]} scale={0.3}>
-      {/* <group rotation={[-Math.PI / 2, 0, 0]} scale={1}> */}
-        <mesh  
-          // castShadow
-          // receiveShadow
+   <group {...props} dispose={null} position={[positions[0], positions[1], positions[2]]} scale={0.4}>
+        <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Plane005.geometry}
           material={materials['iMeshh Metal Anisotropoc']}
         />
         <mesh
-          // castShadow
-          // receiveShadow
+          castShadow
+          receiveShadow
           geometry={nodes.Plane005_1.geometry}
           material={materials.RedMetal}
         />
-      {/* </group> */}
     </group>
   )
  }
@@ -119,26 +127,32 @@ useEffect(()=>{
         {hotelSelected && positionArr.map((val, index) => {
             return (
               <mesh
-                visible={()=>checkIfModelPresent()}
+                // visible={()=>checkIfModelPresent()}
                 key={index}
                 ref={meshRef}
-                onClick={() => placeHotel(index)}
+                onClick={()=>placeHotel(index)}
                 position={[xArr[index], tableHeight/2.5, zArr[index]]}
               >
-                <boxGeometry args={[0.5, 0.001, 0.5]} />
+                <boxGeometry args={[0.7, 0.001, 0.7]} />
                 <meshStandardMaterial color={0x2c9e93} transparent={true} opacity={0.4}/>
               </mesh>
             );
           })}
-          {meshes.map((mesh, index) => {
-          return (
-            <mesh key={index}>
-              <HotelModel positions={[xArr[mesh.position], 0.47, zArr[mesh.position]]}/>
+          {meshes.map((mesh, index) =>{ return (
+            <mesh key={index} >
+              <HotelModel positions={[xArr[mesh.position], 0, zArr[mesh.position]]}/>
             </mesh>
-          )
-          })}
+          )})}
     </>
   )
 }
 
 useGLTF.preload('./models/Hotels.glb')
+
+
+
+
+
+
+
+

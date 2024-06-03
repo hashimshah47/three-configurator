@@ -15,25 +15,11 @@ export const Experience = () => {
 
 const {currentModel, setCurrentModel, currentInstrument, setCurrentInstrument} = useModelContext();
 
-// useEffect(() => {
-//   console.log("useeff",currentModel)
-// },[currentModel, setCurrentModel])
-
   return (
 <>
 <ambientLight/>
 
-      {/* <Stage 
-      intensity={1.5} 
-      environment={null} 
-      // shadows={{
-      //     type: "accumulative",
-      //     color: "#d9afd9",
-      //     colorBlend: 2,
-      //     opacity: 2,
-      //   }}
-        adjustCamera={2}
-      > */}
+      {/* <Stage intensity={1.5} environment={null}  shadows={{ type: "accumulative", color: "#d9afd9", colorBlend: 2,   opacity: 2,}} adjustCamera={2}> */}
 
       {currentModel && currentModel === 'table' && <Table/>}
       {currentModel && currentModel === 'doubletable' && <DoubleTable/>}
@@ -42,20 +28,8 @@ const {currentModel, setCurrentModel, currentInstrument, setCurrentInstrument} =
       {currentInstrument && currentInstrument === 'lamp' && <Lamp/>}
       {currentInstrument && currentInstrument === 'pc' && <PC/>}
       {currentInstrument && currentInstrument === 'arm' && <Arm/>}
-      {currentInstrument && currentInstrument === 'printer' && <Printer/>}
-
-
-
-
-{/* <Hotel/> */}
-{/* <Table/> */}
-{/* <DoubleTable/> */}
-{/* <Lamp/> */}
-{/* <Box/> */}
-{/* <PC/> */}
-{/* <Arm/> */}
-      
-      
+      {currentInstrument && currentInstrument === 'printer' && <Printer/>}    
+        <Hotel/>
       {/* </Stage> */}
       <OrbitControls makeDefault minPolarAngle={0} maxPolarAngle={Math.PI / 2}
       />

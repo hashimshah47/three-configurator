@@ -163,15 +163,14 @@ const MoveModel = (e) => {
 
   return (
     <>
-        {/* <OrbitControls/> */}
         <ambientLight/>
         {isPresenting  &&
-          models.map(({position, id})=>{
+          models.map(({position, id}, index)=>{
             return (
-              <Interactive onMove={MoveModel} onSelectMissed={ModelSelectMissed} onSelect={modelSelected} onSelectEnd={ModelSelectedEnd}>
+              <Interactive key={index} onMove={MoveModel} onSelectMissed={ModelSelectMissed} onSelect={modelSelected} onSelectEnd={ModelSelectedEnd}>
                {/* <Fragment key={id} > */}
                 <mesh ref={modelRef} position={currentPosition} scale={_scale}>
-                    {/* <Experience/> */}
+                    <Experience/>
                     {/* <Table/> */}
                     {/* <Lamp/> */}
                     {/* <Box/> */}

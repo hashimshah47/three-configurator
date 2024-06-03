@@ -9,7 +9,7 @@ export default function Model(props) {
   const { nodes, materials } = useGLTF('./models/Printer.glb')
   return (
     <group {...props} dispose={null}>
-    <group >
+    <group  scale={0.4}>
       <mesh
         castShadow
         receiveShadow

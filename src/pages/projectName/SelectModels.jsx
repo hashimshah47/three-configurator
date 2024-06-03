@@ -17,43 +17,43 @@ const {currentModel, setCurrentModel, currentPanel, setCurrentPanel, currentInst
 
 const handleTable = () => {
     setCurrentModel('table');
-    console.log(currentModel);
+    // console.log(currentModel);
 }
 const handleDoubleTable = () => {
   setCurrentModel('doubletable');
-  console.log(currentModel);
+  // console.log(currentModel);
 }
 
 const handleHotels = () => {
   setCurrentInstrument('hotel');
   setHotelSelected(true);
-  console.log(currentInstrument);
+  // console.log(currentInstrument);
 }
 
 const handleArm = () => {
   setCurrentInstrument('arm');
-  console.log(currentInstrument);
+  // console.log(currentInstrument);
 }
 
 const handlePC = () => {
   setCurrentInstrument('pc');
-  console.log(currentInstrument);
+  // console.log(currentInstrument);
 }
 
 const handlePrinter = () => {
   setCurrentInstrument('printer');
-  console.log(currentInstrument);
+  // console.log(currentInstrument);
 }
 const handleLamp = () => {
   setCurrentInstrument('lamp');
-  console.log(currentInstrument);
+  // console.log(currentInstrument);
 }
 useEffect(() => {
   setCurrentPanel('tables');
 },[])
 
 useEffect(() => {
-  console.log(currentPanel);
+  // console.log(currentPanel);
 },[currentPanel])
 
 
